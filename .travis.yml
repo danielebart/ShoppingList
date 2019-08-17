@@ -1,0 +1,61 @@
+os: linux
+language: android
+licenses:
+  - 'android-sdk-preview-license-.+'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-28.0.3
+    - android-23
+    - sys-img-armeabi-v7a-google_apis-28
+    - extra-android-m2repository
+    - extra-google-m2repository
+    - extra-google-android-support
+jdk: oraclejdk8
+sudo: false
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - libstdc++6
+      - fonts-droid
+before_install:
+  - yes | sdkmanager "platforms;android-28"
+before_script:
+  - wget http://services.gradle.org/distributions/gradle-4.10.2-all.zip
+  - unzip -qq gradle-4.10.2-all.zip
+  - export GRADLE_HOME=$PWD/gradle-4.10.2-all
+  - export PATH=$GRADLE_HOME/bin:$PATH
+  - git clone https://github.com/flutter/flutter.git --depth 1
+
+stages:
+  - test
+  - deploy
+
+jobs:
+  include:
+    - stage: test
+      name: "Test"
+      if: type = push OR type = pull_request
+      script: ./flutter/bin/flutter test
+    - stage: deploy
+      name: "Release"
+      script: ./flutter/bin/flutter -v build apk
+      before_deploy:
+        - git config --local user.name "Daniele Bartorilla"
+        - git config --local user.email "danielebartorilla@gmail.com"
+        - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+        - git tag $TRAVIS_TAG
+      deploy:
+        - provider: releases
+          skip_cleanup: true
+          api_key: $GITHUB_OAUTH_TOKEN
+          file: build/app/outputs/apk/app.apk
+
+cache:
+  directories:
+    - $HOME/.pub-cache
