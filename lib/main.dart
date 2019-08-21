@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopping_list/add_shopping_item.dart';
 import 'package:shopping_list/shopping_list_widget.dart';
 
 void main() => runApp(MyApp());
@@ -39,11 +40,13 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (() => null),
+        onPressed: (() => showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (context) => AddItemWidget())),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
-    ;
   }
 }
