@@ -36,7 +36,7 @@ class AddItemWidgetState extends State<AddItemWidget> {
             iconSize: 40,
             onPressed: () {
               var provider =
-              Provider.of<ShoppingListNotifier>(context, listen: false);
+                  Provider.of<ShoppingListNotifier>(context, listen: false);
               provider.addItem(textController.text);
               Navigator.pop(context);
             },
