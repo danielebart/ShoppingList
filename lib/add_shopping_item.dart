@@ -38,6 +38,7 @@ class AddItemWidgetState extends State<AddItemWidget> {
               var provider =
               Provider.of<ShoppingListNotifier>(context, listen: false);
               provider.addItem(textController.text);
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.add_box,
