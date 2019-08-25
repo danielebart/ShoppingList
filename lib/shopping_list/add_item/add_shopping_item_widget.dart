@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_list/shopping_list_notifier.dart';
+import 'package:shopping_list/shopping_list/items/shopping_list_notifier.dart';
 
 class AddItemWidget extends StatefulWidget {
   @override

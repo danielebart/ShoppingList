@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:quiver/core.dart';
-import 'package:shopping_list/shopping_list_repository.dart';
 import 'package:uuid/uuid.dart';
+
+import '../shopping_list.dart';
+import '../shopping_list_item.dart';
+import '../shopping_list_repository.dart';
 
 class ShoppingListNotifier with ChangeNotifier {
   String currentListId = "0";
@@ -52,27 +54,4 @@ class ShoppingListNotifier with ChangeNotifier {
 
   ShoppingListItem findByID(final String id) => _inMemoryShoppingList.items
       .firstWhere((ShoppingListItem item) => item.id == id);
-}
-
-class ShoppingList {
-  final String id;
-  final List<ShoppingListItem> items;
-
-  ShoppingList(this.id, this.items);
-}
-
-class ShoppingListItem {
-  final String listId;
-  final String id;
-  final bool flagged;
-  final String title;
-
-  ShoppingListItem({this.id, this.listId, this.flagged, this.title});
-
-  @override
-  bool operator ==(o) =>
-      o is ShoppingListItem && flagged == o.flagged && title == o.title;
-
-  @override
-  int get hashCode => hash2(flagged.hashCode, title.hashCode);
 }

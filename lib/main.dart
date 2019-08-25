@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_list/add_shopping_item.dart';
-import 'package:shopping_list/shopping_list_notifier.dart';
-import 'package:shopping_list/shopping_list_widget.dart';
+import 'package:shopping_list/shopping_list/add_item/add_shopping_item_widget.dart';
+import 'package:shopping_list/shopping_list/items/shopping_list_notifier.dart';
+import 'package:shopping_list/shopping_list/items/shopping_list_widget.dart';
 
 import 'common_injector.dart';
 

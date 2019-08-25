@@ -1,4 +1,5 @@
-import 'package:shopping_list/shopping_list_notifier.dart';
+import 'package:shopping_list/shopping_list/shopping_list.dart';
+import 'package:shopping_list/shopping_list/shopping_list_item.dart';
 
 abstract class ShoppingListRepository {
   Future<List<ShoppingList>> getShoppingLists();

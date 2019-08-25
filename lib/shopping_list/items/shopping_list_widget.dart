@@ -1,7 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_list/shopping_item_widget.dart';
-import 'package:shopping_list/shopping_list_notifier.dart';
+import 'package:shopping_list/shopping_list/items/shopping_item_widget.dart';
+import 'package:shopping_list/shopping_list/items/shopping_list_notifier.dart';
+
+import '../shopping_list.dart';
 
 class ShoppingListWidget extends StatelessWidget {
   @override
