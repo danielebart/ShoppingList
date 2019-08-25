@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/add_shopping_item.dart';
 import 'package:shopping_list/shopping_list_notifier.dart';
 import 'package:shopping_list/shopping_list_widget.dart';
 
-void main() => runApp(MyApp());
+import 'common_injector.dart';
+
+void main() {
+  registerCommonDependencies();
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      builder: (context) => ShoppingListNotifier(),
+      builder: (context) =>
+          Injector.appInstance.getDependency<ShoppingListNotifier>(),
       child: MaterialApp(
           title: 'ShoppingList',
           theme: ThemeData(

@@ -1,16 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:quiver/core.dart';
-import 'package:shopping_list/db/shopping_list_db_repository.dart';
 import 'package:shopping_list/shopping_list_repository.dart';
 import 'package:uuid/uuid.dart';
 
 class ShoppingListNotifier with ChangeNotifier {
   String currentListId = "0";
-
-  final ShoppingListRepository shoppingListRepository =
-      ShoppingListDBRepository(); // TODO inject this repository
-
+  final ShoppingListRepository shoppingListRepository;
   ShoppingList _inMemoryShoppingList;
+
+  ShoppingListNotifier(this.shoppingListRepository);
 
   Stream<ShoppingList> get list {
     if (_inMemoryShoppingList == null) {
