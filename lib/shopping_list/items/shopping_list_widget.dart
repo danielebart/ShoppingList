@@ -12,15 +12,20 @@ class ShoppingListWidget extends StatelessWidget {
       return StreamBuilder<ShoppingList>(
           stream: shoppingList.list,
           builder: (context, AsyncSnapshot<ShoppingList> snapshot) {
-            return ListView.builder(
-                itemCount: snapshot.data?.items?.length ?? 0,
-                itemBuilder: (context, position) {
-                  var id = snapshot.data.items[position].id;
-                  return Dismissible(
-                      key: Key(id),
-                      onDismissed: (direction) => shoppingList.removeItem(id),
-                      child: ShoppingItemWidget(id));
-                });
+            var items = snapshot.data?.items;
+            if (items != null && items.isNotEmpty) {
+              return ListView.builder(
+                  itemCount: snapshot.data?.items?.length ?? 0,
+                  itemBuilder: (context, position) {
+                    var id = snapshot.data?.items[position]?.id;
+                    return Dismissible(
+                        key: Key(id),
+                        onDismissed: (direction) => shoppingList.removeItem(id),
+                        child: ShoppingItemWidget(id));
+                  });
+            }
+
+            return Container();
           });
     });
   }

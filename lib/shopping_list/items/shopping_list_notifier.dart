@@ -27,12 +27,15 @@ class ShoppingListNotifier with ChangeNotifier {
   }
 
   onItemAdded(ShoppingListItem item) {
-    _inMemoryShoppingList?.items?.add(item);
+    if (_inMemoryShoppingList == null) {
+      _inMemoryShoppingList = ShoppingList(currentListId, []);
+    }
+    _inMemoryShoppingList.items.add(item);
     notifyListeners();
   }
 
   removeItem(String id) {
-    _inMemoryShoppingList?.items?.removeWhere((item) => item.id == id);
+    _inMemoryShoppingList.items?.removeWhere((item) => item.id == id);
     shoppingListRepository.remove(id);
   }
 

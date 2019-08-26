@@ -54,7 +54,7 @@ class HomeScaffold extends StatelessWidget {
                 context: context,
                 builder: (context) => AddItemWidget()).then((value) {
               var provider = Provider.of<ShoppingListNotifier>(context);
-              return provider.onItemAdded(value);
+              if (value != null) provider.onItemAdded(value);
             })),
         child: Icon(Icons.add_shopping_cart),
       ),
