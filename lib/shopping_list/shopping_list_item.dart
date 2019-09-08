@@ -10,8 +10,13 @@ class ShoppingListItem {
 
   @override
   bool operator ==(o) =>
-      o is ShoppingListItem && flagged == o.flagged && title == o.title;
+      o is ShoppingListItem &&
+          flagged == o.flagged &&
+          title == o.title &&
+          id == o.id &&
+          listId == o.listId;
 
   @override
-  int get hashCode => hash2(flagged.hashCode, title.hashCode);
+  int get hashCode =>
+      hash4(id.hashCode, listId.hashCode, flagged.hashCode, title.hashCode);
 }

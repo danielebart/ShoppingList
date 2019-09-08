@@ -9,4 +9,6 @@ abstract class ShoppingListRepository {
   add(ShoppingListItem item);
 
   remove(String itemId);
+
+  removeAll();
 }

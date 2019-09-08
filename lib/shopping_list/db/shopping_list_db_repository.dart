@@ -7,6 +7,7 @@ import '../shopping_list_item.dart';
 import '../shopping_list_repository.dart';
 
 class ShoppingListDBRepository extends ShoppingListRepository {
+  static const _SHOPPING_LIST_ITEMS_DB_NAME = "shopping_list_item";
   final Future<Database> database = _openDB();
 
   @override
@@ -22,7 +23,7 @@ class ShoppingListDBRepository extends ShoppingListRepository {
     final Database db = await database;
 
     await db.insert(
-      "shopping_list_item",
+      _SHOPPING_LIST_ITEMS_DB_NAME,
       item.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -33,11 +34,18 @@ class ShoppingListDBRepository extends ShoppingListRepository {
     _removeShoppingListItem(itemId);
   }
 
+  @override
+  removeAll() async {
+    final Database db = await database;
+
+    await db.delete(_SHOPPING_LIST_ITEMS_DB_NAME);
+  }
+
   Future<void> _removeShoppingListItem(String itemId) async {
     final Database db = await database;
 
     await db.delete(
-      "shopping_list_item",
+      _SHOPPING_LIST_ITEMS_DB_NAME,
       where: "item_id = ?",
       whereArgs: [itemId],
     );
@@ -48,14 +56,14 @@ class ShoppingListDBRepository extends ShoppingListRepository {
     final Database db = await database;
 
     final List<Map<String, dynamic>> dbEntries =
-        await db.query("shopping_list_item");
+    await db.query(_SHOPPING_LIST_ITEMS_DB_NAME);
 
     var entries = dbEntries.map((e) => ShoppingItemDB.fromMap(e));
 
     return entries
-        .map((e) => e.shoppingListId)
+        .map((ShoppingItemDB e) => e.shoppingListId)
         .toSet()
-        .map((listId) => createShoppingList(listId, entries))
+        .map((String listId) => createShoppingList(listId, entries))
         .toList();
   }
 
@@ -64,7 +72,7 @@ class ShoppingListDBRepository extends ShoppingListRepository {
     final Database db = await database;
 
     final List<Map<String, dynamic>> dbEntries = await db.query(
-        "shopping_list_item",
+        _SHOPPING_LIST_ITEMS_DB_NAME,
         where: "shopping_list_id = ?",
         whereArgs: [id]);
 
@@ -75,23 +83,24 @@ class ShoppingListDBRepository extends ShoppingListRepository {
     return ShoppingList(id, entries);
   }
 
-  createShoppingList(id, entries) => ShoppingList(
-      id,
-      entries
-          .where((item) => item.shoppingListId == id)
-          .toList()
-          .map((item) => item.toUIModel()));
+  ShoppingList createShoppingList(id, Iterable<ShoppingItemDB> entries) {
+    return ShoppingList(
+        id,
+        entries
+            .where((item) => item.shoppingListId == id)
+            .map((item) => item.toUIModel())
+            .toList());
+  }
 
   static Future<Database> _openDB() async {
     return openDatabase(
-      join(await getDatabasesPath(), "shopping_list.shopping_list.db"),
+      join(await getDatabasesPath(), "shopping_list.db"),
       onCreate: (db, version) {
-        db.execute("CREATE TABLE shopping_list_item("
+        db.execute("CREATE TABLE $_SHOPPING_LIST_ITEMS_DB_NAME("
             "item_id TEXT PRIMARY KEY, "
             "shopping_list_id TEXT, "
             "title TEXT, "
-            "flagged INTEGER"
-            ")");
+            "flagged INTEGER)");
       },
       version: 1,
     );
