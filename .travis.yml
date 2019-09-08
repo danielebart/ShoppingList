@@ -38,10 +38,19 @@ stages:
 
 jobs:
   include:
-    - stage: test
-      name: "Test"
+    - stage: unit-test
+      name: "Unit & Widget Testing"
       if: type = push OR type = pull_request
       script: ./flutter/bin/flutter test
+    - stage: integration-test
+      name: "Integration Testing"
+      if: type = push OR type = pull_request
+      os: osx
+      sudo: true
+      env: running driver on simulator
+      script: ./integration_tests.sh
+      osx_image: xcode8.0
+      before_install: ./launch_simulator.sh
     - stage: deploy
       name: "Release"
       script: ./flutter/bin/flutter -v build apk
