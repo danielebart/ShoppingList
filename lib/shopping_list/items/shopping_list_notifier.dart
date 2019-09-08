@@ -5,15 +5,16 @@ import '../shopping_list_item.dart';
 import '../shopping_list_repository.dart';
 
 class ShoppingListNotifier with ChangeNotifier {
-  String currentListId = "0";
-  final ShoppingListRepository shoppingListRepository;
-  ShoppingList _inMemoryShoppingList;
+  String currentListId = "0"; // TODO add logic for multiple lists
+  final ShoppingListRepository
+  _shoppingListRepository; // TODO move it in a interactor
+  ShoppingList _inMemoryShoppingList; // TODO move it in a interactor
 
-  ShoppingListNotifier(this.shoppingListRepository);
+  ShoppingListNotifier(this._shoppingListRepository);
 
   Stream<ShoppingList> get list {
     if (_inMemoryShoppingList == null) {
-      return shoppingListRepository
+      return _shoppingListRepository
           .getShoppingList(currentListId)
           .asStream()
           .handleError((e, stacktrace) => print("$e\n$stacktrace"))
@@ -36,14 +37,18 @@ class ShoppingListNotifier with ChangeNotifier {
 
   removeItem(String id) {
     _inMemoryShoppingList.items?.removeWhere((item) => item.id == id);
-    shoppingListRepository.remove(id);
+    _shoppingListRepository.remove(id);
   }
 
   setFlagged(String id, bool flagged) {
-    final item = findByID(id);
-    final listItemIndex = _inMemoryShoppingList.items.indexOf(item);
-    _inMemoryShoppingList.items[listItemIndex] = ShoppingListItem(
-        id: id, listId: item.listId, title: item.title, flagged: flagged);
+    final oldItem = findByID(id);
+    final listItemIndex = _inMemoryShoppingList.items.indexOf(oldItem);
+    final newItem = ShoppingListItem(
+        id: id, listId: oldItem.listId, title: oldItem.title, flagged: flagged);
+
+    _inMemoryShoppingList.items[listItemIndex] = newItem;
+    _shoppingListRepository.add(newItem);
+
     notifyListeners();
   }
 
