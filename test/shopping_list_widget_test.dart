@@ -55,7 +55,7 @@ void main() {
   });
 
   testWidgets(
-      'given a populated list of item when removing an item then remove from it from the list',
+      'given a populated list of item when removing an item then remove it from the list',
       (WidgetTester tester) async {
     var fakeItemId = "fake-id";
     var fakeItem = ShoppingListItem(
