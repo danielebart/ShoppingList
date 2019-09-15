@@ -8,12 +8,15 @@ import '../shopping_list_repository.dart';
 class ShoppingListProviderImpl
     with ChangeNotifier
     implements ShoppingListProvider {
-  String currentListId = "0"; // TODO add logic for multiple lists
+  String _currentListId = "0"; // TODO add logic for multiple lists
   final ShoppingListRepository
   _shoppingListRepository; // TODO move it in a interactor
   ShoppingList _inMemoryShoppingList; // TODO move it in a interactor
 
   ShoppingListProviderImpl(this._shoppingListRepository);
+
+  @override
+  String get currentListId => _currentListId;
 
   @override
   Stream<ShoppingList> get list {

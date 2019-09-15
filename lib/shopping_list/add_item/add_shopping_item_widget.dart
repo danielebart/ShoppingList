@@ -4,7 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:injector/injector.dart';
 import 'package:provider/provider.dart';
 
-import 'add_item_notifier.dart';
+import 'add_item_provider.dart';
 
 class AddItemWidget extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class AddItemWidget extends StatefulWidget {
 
 class AddItemWidgetState extends State<AddItemWidget> {
   final textController = TextEditingController();
-  final _addNotifier = Injector.appInstance.getDependency<AddItemNotifier>();
+  final _addNotifier = Injector.appInstance.getDependency<AddItemProvider>();
 
   @override
   void initState() {
@@ -62,13 +62,13 @@ class AddItemWidgetState extends State<AddItemWidget> {
 class IconButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AddItemNotifier>(builder: (context, addItemNotifier, _) {
-      if (addItemNotifier.state is Idle) {
+    return Consumer<AddItemProvider>(builder: (context, addItemNotifier, _) {
+      if (addItemNotifier.state is Closed) {
         return Container();
       } else if (addItemNotifier.state is AddItemSuccess) {
         var state = addItemNotifier.state as AddItemSuccess;
         var shoppingItem = state.item;
-        addItemNotifier.setIdle();
+        addItemNotifier.setCloseState();
         SchedulerBinding.instance.addPostFrameCallback((_) {
           Navigator.pop(context, shoppingItem);
         });

@@ -3,17 +3,20 @@ import 'package:uuid/uuid.dart';
 
 import '../shopping_list_item.dart';
 import '../shopping_list_repository.dart';
+import 'add_item_provider.dart';
 
-class AddItemNotifier with ChangeNotifier {
+class AddItemProviderImpl with ChangeNotifier implements AddItemProvider {
   final ShoppingListRepository _shoppingListRepository;
   final String _currentListID;
   AddItemState _state = AddItemDisabled();
   String _currentText = "";
 
-  AddItemNotifier(this._shoppingListRepository, this._currentListID);
+  AddItemProviderImpl(this._shoppingListRepository, this._currentListID);
 
+  @override
   AddItemState get state => _state;
 
+  @override
   addButtonPressed() {
     assert(_currentText.isNotEmpty);
 
@@ -28,6 +31,7 @@ class AddItemNotifier with ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   onTextChanged(String text) {
     _currentText = text;
     var previousState = _state;
@@ -35,21 +39,8 @@ class AddItemNotifier with ChangeNotifier {
     if (previousState != _state) notifyListeners();
   }
 
-  setIdle() {
-    _state = Idle();
+  @override
+  setCloseState() {
+    _state = Closed();
   }
-}
-
-abstract class AddItemState {}
-
-class Idle extends AddItemState {}
-
-class AddItemDisabled extends AddItemState {}
-
-class AddItemEnabled extends AddItemState {}
-
-class AddItemSuccess extends AddItemState {
-  final ShoppingListItem item;
-
-  AddItemSuccess(this.item);
 }

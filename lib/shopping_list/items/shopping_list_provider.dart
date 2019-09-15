@@ -13,4 +13,6 @@ abstract class ShoppingListProvider implements ChangeNotifier {
   setFlagged(String id, bool flagged);
 
   ShoppingListItem findByID(final String id);
+
+  String get currentListId;
 }
