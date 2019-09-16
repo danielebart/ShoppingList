@@ -4,7 +4,7 @@ import 'package:shopping_list/shopping_list/manage_shopping_list/add_item/add_it
 import 'package:shopping_list/shopping_list/manage_shopping_list/add_item/add_item_provider_impl.dart';
 import 'package:shopping_list/shopping_list/manage_shopping_list/shopping_list_item.dart';
 
-import 'mock_shopping_list_repository.dart';
+import '../items/mock_shopping_list_repository.dart';
 
 void main() {
   test(

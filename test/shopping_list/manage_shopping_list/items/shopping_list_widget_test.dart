@@ -10,7 +10,7 @@ import 'package:shopping_list/shopping_list/manage_shopping_list/items/shopping_
 import 'package:shopping_list/shopping_list/manage_shopping_list/shopping_list.dart';
 import 'package:shopping_list/shopping_list/manage_shopping_list/shopping_list_item.dart';
 
-import 'widget_utils.dart';
+import '../../../widget_utils.dart';
 
 void main() {
   testWidgets(

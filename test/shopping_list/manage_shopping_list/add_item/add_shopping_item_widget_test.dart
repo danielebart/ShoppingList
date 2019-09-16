@@ -9,8 +9,8 @@ import 'package:shopping_list/shopping_list/manage_shopping_list/add_item/add_sh
 import 'package:shopping_list/shopping_list/manage_shopping_list/items/shopping_list_provider.dart';
 import 'package:shopping_list/shopping_list/manage_shopping_list/shopping_list_item.dart';
 
+import '../items/mock_shopping_list_provider.dart';
 import 'mock_add_item_provider.dart';
-import 'mock_shopping_list_provider.dart';
 
 void main() {
   testWidgets('when pressing the add item button then show the add item widget',
