@@ -24,6 +24,7 @@ void main() {
           return addItemProviderMock;
         });
         await tester.pumpWidget(MyApp());
+        await tester.pumpAndSettle();
         await tester.tap(find.byIcon(Icons.add_shopping_cart));
         await tester.pumpAndSettle();
 
@@ -45,6 +46,7 @@ void main() {
     when(addItemProviderMock.state).thenReturn(AddItemDisabled());
 
     await tester.pumpWidget(MyApp());
+    await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.add_shopping_cart));
     await tester.pumpAndSettle();
 
@@ -70,6 +72,7 @@ void main() {
     when(addItemProviderMock.state).thenReturn(AddItemDisabled());
 
     await tester.pumpWidget(MyApp());
+    await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.add_shopping_cart));
     await tester.pumpAndSettle();
 
@@ -95,6 +98,7 @@ void main() {
     when(addItemProviderMock.state).thenReturn(AddItemEnabled());
 
     await tester.pumpWidget(MyApp());
+    await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.add_shopping_cart));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), "whatever");
@@ -119,6 +123,7 @@ void main() {
     when(addItemProviderMock.state).thenReturn(AddItemEnabled());
 
     await tester.pumpWidget(MyApp());
+    await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.add_shopping_cart));
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextField), "whatever");
@@ -149,6 +154,7 @@ void main() {
     when(addItemProviderMock.state).thenReturn(AddItemSuccess(addedItem));
 
     await tester.pumpWidget(MyApp());
+    await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.add_shopping_cart));
     await tester.pumpAndSettle();
 
