@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:quiver/core.dart';
 
 class ShoppingListItem {
@@ -6,7 +7,10 @@ class ShoppingListItem {
   final bool flagged;
   final String title;
 
-  ShoppingListItem({this.id, this.listId, this.flagged, this.title});
+  ShoppingListItem({@required this.id,
+    @required this.listId,
+    @required this.flagged,
+    @required this.title});
 
   @override
   bool operator ==(o) =>
